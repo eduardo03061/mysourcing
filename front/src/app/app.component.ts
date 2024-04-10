@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
- 
+
 import { MenuComponent } from './menu/menu.component';
 import { UserRegisterComponent } from './user/user-register/userRegister.component';
- 
+
 @Component({
   selector: 'app-root',
   standalone: true,

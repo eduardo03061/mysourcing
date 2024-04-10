@@ -24,8 +24,17 @@ export class UserRegisterComponent {
 
     phone = '';
 
-    zipCode = 28984;
-    state = 'Colima';
+    zipCode = '';
+    state = '';
+
+
+    setZipCode() {
+        this.dataService.sendZipCode(this.zipCode).subscribe(resp => {
+            resp = JSON.parse(resp);
+            this.state = resp;
+        });
+    }
+
 
     sendForm() {
         const data = {
@@ -38,13 +47,21 @@ export class UserRegisterComponent {
             state: this.state
 
         }
-        console.log(data)
 
         this.dataService.sendDataUser(data).subscribe(resp => {
             resp = JSON.parse(resp)
 
             if (resp.message === 'Usuario registrado con exito.') {
-                alert(resp.message)
+                alert(resp.message);
+
+
+                this.names = '';
+                this.firstSurname = '';
+                this.secondSurname = '';
+                this.email = '';
+                this.phone = '';
+                this.zipCode = '';
+                this.state = '';
             }
         });
     };

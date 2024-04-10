@@ -8,31 +8,39 @@
             <form>
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" id="name" placeholder="Ingresa tu nombre" [(ngModel)]="names" [ngModelOptions]="{standalone:true}" />
+                    <input type="text" class="form-control" id="name" placeholder="Ingresa tu nombre"
+                        [(ngModel)]="names" [ngModelOptions]="{standalone:true}" />
                 </div>
                 <div class="form-group">
                     <label for="firstSurname">Primer apellido</label>
-                    <input type="text" class="form-control" id="firstSurname" placeholder="Ingresa tu primer apellido" [(ngModel)]="firstSurname" [ngModelOptions]="{standalone:true}" />
+                    <input type="text" class="form-control" id="firstSurname" placeholder="Ingresa tu primer apellido"
+                        [(ngModel)]="firstSurname" [ngModelOptions]="{standalone:true}" />
                 </div>
                 <div class="form-group">
                     <label for="secondSurname">Segundo apellido</label>
-                    <input type="text" class="form-control" id="secondSurname" placeholder="Ingresa tu segundo apellido" [(ngModel)]="secondSurname" [ngModelOptions]="{standalone:true}" />
+                    <input type="text" class="form-control" id="secondSurname" placeholder="Ingresa tu segundo apellido"
+                        [(ngModel)]="secondSurname" [ngModelOptions]="{standalone:true}" />
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="Ingresa tu email" [(ngModel)]="email" [ngModelOptions]="{standalone:true}" />
+                    <input type="email" class="form-control" id="email" placeholder="Ingresa tu email"
+                        [(ngModel)]="email" [ngModelOptions]="{standalone:true}" />
                 </div>
                 <div class="form-group">
                     <label for="phone">phone</label>
-                    <input type="number" class="form-control" id="phone" placeholder="Ingresa tu telefono" [(ngModel)]="phone" [ngModelOptions]="{standalone:true}" />
+                    <input type="number" class="form-control" id="phone" placeholder="Ingresa tu telefono"
+                        [(ngModel)]="phone" [ngModelOptions]="{standalone:true}" />
                 </div>
                 <div class="form-group">
                     <label for="zipCode">Codigo postal</label>
-                    <input type="text" class="form-control" id="zipCode" placeholder="Ingresa tu codigo postal" [(ngModel)]="zipCode" [ngModelOptions]="{standalone:true}" />
+                    <input type="text" class="form-control" (change)="setZipCode()" id="zipCode"
+                        placeholder="Ingresa tu codigo postal" [(ngModel)]="zipCode"
+                        [ngModelOptions]="{standalone:true}" />
                 </div>
                 <div class="form-group">
                     <label for="state">Estado</label>
-                    <input type="text" class="form-control" id="state" placeholder="Ingresa tu estado" [(ngModel)]="state" [ngModelOptions]="{standalone:true}" />
+                    <input type="text" class="form-control" id="state" placeholder="Ingresa tu estado"
+                        [(ngModel)]="state" [ngModelOptions]="{standalone:true}" />
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary" (click)="sendForm()">Enviar</button>
