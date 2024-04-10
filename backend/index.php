@@ -26,7 +26,6 @@ class Api
         $requestMethod = $_SERVER['REQUEST_METHOD'];
         // Obtenemos la ruta de la solicitud
         $request = $_SERVER['REQUEST_URI'];
-        print_r('entra');
         // Analizamos la ruta para determinar la acción a realizar
 
         switch ($request) {
@@ -118,7 +117,7 @@ class Api
             if ($stmt->execute()) {
                 // Usuario registrado con éxito
                 header('Content-Type: application/json');
-                echo json_encode(array("message" => "Usuario registrado con éxito."));
+                echo json_encode(array("message" => "Usuario registrado con exito."));
             } else {
                 // Error al registrar el usuario
                 if ($stmt->errno === 1062) { // Código de error para duplicidad de clave �nica
