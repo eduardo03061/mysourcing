@@ -3,12 +3,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataService } from '../../core/services/data.service';
 import { AsyncPipe } from '@angular/common';
 import { EMPTY, catchError } from 'rxjs';
+import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-user',
     standalone: true,
     imports: [FormsModule,
-        ReactiveFormsModule, AsyncPipe],
+        ReactiveFormsModule, AsyncPipe, RouterLink, RouterModule],
     templateUrl: './userRegister.component.html',
     styleUrl: './userRegister.component.css'
 })

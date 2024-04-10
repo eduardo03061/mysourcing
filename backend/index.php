@@ -79,27 +79,42 @@ class Api
 
     private function getUsers($queryParams)
     {
-       
+
         $recordsPerPage = 5;
 
         $page = isset($queryParams['page']) ? (int)$queryParams['page'] : 1;
 
         $offset = ($page - 1) * $recordsPerPage;
+
        
+        if (isset($queryParams['query'])) {
+            
+            $searchTerm = $queryParams['query'];
+            $result = $this->db->conn->query("SELECT * FROM users WHERE names LIKE '%$searchTerm%' OR firstSurname LIKE '%$searchTerm%' OR secondSurname LIKE '%$searchTerm%' OR email LIKE '%$searchTerm%' OR zipCode LIKE '%$searchTerm%' OR state LIKE '%$searchTerm%' ORDER BY id LIMIT $recordsPerPage OFFSET $offset");
+            // Convertimos los resultados a un array
+            $users = array();
+            while ($row = $result->fetch_assoc()) {
+                $users[] = $row;
+            }
 
+            // Devolvemos la respuesta en formato JSON
+            header('Content-Type: application/json');
+            echo json_encode($users);
+        } else {
 
-        // Consultamos la base de datos para obtener los usuarios
-        $result = $this->db->conn->query("SELECT * FROM users ORDER BY id LIMIT $recordsPerPage OFFSET $offset");
+            // Consultamos la base de datos para obtener los usuarios
+            $result = $this->db->conn->query("SELECT * FROM users ORDER BY id LIMIT $recordsPerPage OFFSET $offset");
 
-        // Convertimos los resultados a un array
-        $users = array();
-        while ($row = $result->fetch_assoc()) {
-            $users[] = $row;
+            // Convertimos los resultados a un array
+            $users = array();
+            while ($row = $result->fetch_assoc()) {
+                $users[] = $row;
+            }
+
+            // Devolvemos la respuesta en formato JSON
+            header('Content-Type: application/json');
+            echo json_encode($users);
         }
-
-        // Devolvemos la respuesta en formato JSON
-        header('Content-Type: application/json');
-        echo json_encode($users);
     }
 
     private function registerUser()

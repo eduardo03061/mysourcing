@@ -13,9 +13,9 @@ export class DataService {
 
 
 
-  getUsers(page: any): Observable<any> {
+  getUsers(page: any, query:string): Observable<any> {
 
-    return this.http.get(`${this.apiUrlUsers}?page=${page}`) 
+    return this.http.get(`${this.apiUrlUsers}?page=${page}&${query}`) 
 
   }
 

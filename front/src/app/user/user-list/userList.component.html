@@ -1,14 +1,35 @@
-<div>
-     
-
+<div class="container mt-5">
+    <a class="btn btn-success" routerLink="/">Inicio</a>
+    
     @if (usersResults$ | async; as resultObject) {
-        <ul class="pokemon-list">
-          @for (item of resultObject; track item.id) {
-            <li>
-              <app-user-item [userInfo]="item" />
-            </li>
-          }
-        </ul>
+        <div class="container col-md-6">
+            <input type="text" id="searchInput" class="form-control" 
+            placeholder="Buscar" (change)="searchData()"  [(ngModel)]="search" />
+        </div>
+    <table class="table table-striped mt-5">
+        <thead class="thead-dark">
+            <th>Nombres</th>
+            <th>Primer apellido</th>
+            <th>Segundo apellido</th>
+            <th>Email</th>
+            <th>Telefono</th>
+            <th>Codigo postal</th>
+            <th>Estado</th>
+        </thead>
+        <tbody>
+            @for (user of resultObject; track user.id) {
+            <tr>
+                <td>{{ user.names}}</td>
+                <td>{{ user.firstSurname}}</td>
+                <td>{{ user.secondSurname}}</td>
+                <td>{{ user.email}}</td>
+                <td>{{ user.phone}}</td>
+                <td>{{ user.zipCode}}</td>
+                <td>{{ user.state}}</td>
+            </tr>
+            }
+        </tbody>
+    </table>
     }
-      
-</div> 
+
+</div>
