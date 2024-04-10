@@ -75,7 +75,7 @@ class Api
         $zipCode = $data['zipCode'];
         $state = $data['state'];
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { //Aqui se puede remplazar por la funcion isValidEmail que valida mediante expresion regular
             $this->errorResponse("El correo electronico proporcionado no es valido.");
             return;
         }
@@ -83,6 +83,18 @@ class Api
         // Validar el código postal contra la API de Copomex
         if (!$this->isValidZipCode($zipCode)) {
             $this->errorResponse("El codigo postal proporcionado no es valido.");
+            return;
+        }
+
+        // Validar que los campos solo contengan letras
+        if (!ctype_alpha(str_replace(' ', '', $names)) || !ctype_alpha(str_replace(' ', '', $firstSurname)) || !ctype_alpha(str_replace(' ', '', $secondSurname))) {
+            $this->errorResponse("Los campos 'names', 'firstSurname', 'secondSurname' solo deben contener letras y espacios.");
+            return;
+        }
+
+        // Validar que el campo phone solo contenga n�meros
+        if (!ctype_digit($phone)) {
+            $this->errorResponse("El campo 'phone' solo debe contener numeros.");
             return;
         }
 
@@ -113,28 +125,36 @@ class Api
         $stmt->close();
     }
 
+    private function isValidEmail($email)
+    {
+        $pattern = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
+        return preg_match($pattern, $email);
+    }
+
     private function isValidZipCode($zipCode)
     {
         try {
             // Construir la URL de la API de Copomex con el código postal 654b5939-b11b-40dd-82b6-902e1e176b35
             $apiUrl = "https://api.copomex.com/query/info_cp/" . $zipCode . "?token=pruebas";
-        
+
             // Realizar la solicitud HTTP a la API de Copomex
             $response = file_get_contents($apiUrl);
-         
+
             if ($response === false) {
                 throw new Exception("Error de peticion");
             }
 
             // Decodificar la respuesta JSON
             $data = json_decode($response, true);
-            
+
             // Verificar si la respuesta contiene información (el código postal es válido)
             return true;
         } catch (\Throwable $e) {
             $this->errorResponse("Error al registrar el usuario: " . $e->getMessage());
         }
     }
+
+
 
 
 
