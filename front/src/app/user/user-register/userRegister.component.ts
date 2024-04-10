@@ -1,19 +1,22 @@
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
- 
+import { DataService } from '../../core/services/data.service';
+import { AsyncPipe } from '@angular/common';
+import { EMPTY, catchError } from 'rxjs';
 
 @Component({
     selector: 'app-user',
     standalone: true,
     imports: [FormsModule,
-        ReactiveFormsModule],
+        ReactiveFormsModule, AsyncPipe],
     templateUrl: './userRegister.component.html',
     styleUrl: './userRegister.component.css'
 })
 
   
 export class UserRegisterComponent {
-  
+    constructor(private dataService: DataService) { }
+    public errorMessage!:string;
     names='';
     firstSurname='';
     secondSurname='';
@@ -35,8 +38,8 @@ export class UserRegisterComponent {
             state: this.state
 
         }
-        console.log({data})
+        console.log(data)
 
-       
+        this.dataService.sendDataUser(data).subscribe(resp => console.log('resp',resp));
     };
 }
