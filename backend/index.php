@@ -213,8 +213,9 @@ class Api
     private function isValidZipCode($zipCode)
     {
         try {
-            // Construir la URL de la API de Copomex con el código postal 654b5939-b11b-40dd-82b6-902e1e176b35
-            $apiUrl = "https://api.copomex.com/query/info_cp/" . $zipCode . "?token=pruebas";
+            // Construir la URL de la API de Copomex con el código postal 
+            //Alternar con el token=pruebas
+            $apiUrl = "https://api.copomex.com/query/info_cp/" . $zipCode . "?token=654b5939-b11b-40dd-82b6-902e1e176b35";
 
             // Realizar la solicitud HTTP a la API de Copomex
             $response = file_get_contents($apiUrl);
