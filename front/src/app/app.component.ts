@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterModule, RouterOutlet, Routes } from '@angular/router';
-import { UserComponent } from './user/user.component';
-
-const routes: Routes = [
-  { path: 'users', component: UserComponent },
-];
+import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+ 
+import { MenuComponent } from './menu/menu.component';
+import { UserRegisterComponent } from './user/user-register/userRegister.component';
+ 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, UserComponent, RouterLink, RouterModule],
+  imports: [RouterOutlet, MenuComponent, UserRegisterComponent, RouterLink, RouterModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

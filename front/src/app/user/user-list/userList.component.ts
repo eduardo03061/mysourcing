@@ -4,10 +4,10 @@ import { Component } from '@angular/core';
   selector: 'app-user',
   standalone: true,
   imports: [],
-  templateUrl: './user.component.html',
-  styleUrl: './user.component.css'
+  templateUrl: './userList.component.html',
+  styleUrl: './userList.component.css'
 })
-export class UserComponent {
+export class UserListComponent {
   username ="eduardo";
   isLoggin = true;
 }
