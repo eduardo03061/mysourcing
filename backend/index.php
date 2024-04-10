@@ -1,4 +1,12 @@
 <?php
+
+
+
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Aceppt, Authorization");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header('Content-Type: application/json; charset=utf-8');
+
 // Incluimos el archivo de conexión a la base de datos
 require_once 'db_connection.php';
 
@@ -18,8 +26,9 @@ class Api
         $requestMethod = $_SERVER['REQUEST_METHOD'];
         // Obtenemos la ruta de la solicitud
         $request = $_SERVER['REQUEST_URI'];
-
+        print_r('entra');
         // Analizamos la ruta para determinar la acción a realizar
+
         switch ($request) {
             case '/api/users':
                 if ($requestMethod === 'GET') {
@@ -28,7 +37,9 @@ class Api
                 } elseif ($requestMethod === 'POST') {
                     // Registrar un nuevo usuario
                     $this->registerUser();
-                } else {
+                } elseif($requestMethod === 'OPTIONS') {
+                    exit(0);
+                }else{
                     // Método no permitido
                     $this->methodNotAllowedResponse();
                 }
