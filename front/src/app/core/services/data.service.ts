@@ -15,20 +15,7 @@ export class DataService {
 
   getUsers(page: any): Observable<any> {
 
-    return this.http.get(`${this.apiUrlUsers}?page=${page}`, {
-      headers: new HttpHeaders().set('Content-Type', 'application/json'),
-      responseType: 'text'
-    }).pipe(catchError((error: HttpErrorResponse) => {
-      let errorMessage = "";
-      if (error.error instanceof ErrorEvent) {
-        errorMessage = `Error: ${error.error.message}`;
-      } else {
-        errorMessage = `Error code: ${error.status}, message: ${error.message}`
-      }
-
-
-      return throwError(() => errorMessage)
-    }));
+    return this.http.get(`${this.apiUrlUsers}?page=${page}`) 
 
   }
 

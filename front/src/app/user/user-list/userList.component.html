@@ -1,8 +1,14 @@
 <div>
      
 
-     
-</div>
-
- 
-  
+    @if (usersResults$ | async; as resultObject) {
+        <ul class="pokemon-list">
+          @for (item of resultObject; track item.id) {
+            <li>
+              <app-user-item [userInfo]="item" />
+            </li>
+          }
+        </ul>
+    }
+      
+</div> 

@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { DataService } from '../../core/services/data.service';
 import { EMPTY, Observable, catchError } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { UserItemComponent } from '../../components/user-item/user-item.component';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, UserItemComponent],
   templateUrl: './userList.component.html',
   styleUrl: './userList.component.css'
 })
@@ -18,15 +19,15 @@ export class UserListComponent {
 
 
 
-  ngOnInit() {
-    this.dataService.getUsers(1).subscribe(resp => {
-       
-      
-      resp = JSON.parse(resp);
-      console.log('resp',resp);
-      this.usersResults$ = resp;
-  });
-    console.log('results',this.usersResults$)
+  ngOnInit() { 
+    this.usersResults$ = this.dataService.getUsers(1).pipe(catchError((error: string) => {
+      this.errorMessage = error;
+      return EMPTY;
+    }));
+
+
+    
+    console.log('results', this.usersResults$)
   }
 
 
