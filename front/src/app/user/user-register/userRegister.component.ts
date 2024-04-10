@@ -13,16 +13,16 @@ import { EMPTY, catchError } from 'rxjs';
     styleUrl: './userRegister.component.css'
 })
 
-  
+
 export class UserRegisterComponent {
     constructor(private dataService: DataService) { }
-    public errorMessage!:string;
-    names='';
-    firstSurname='';
-    secondSurname='';
-    email='';
+    public errorMessage!: string;
+    names = '';
+    firstSurname = '';
+    secondSurname = '';
+    email = '';
 
-    phone='';
+    phone = '';
 
     zipCode = 28984;
     state = 'Colima';
@@ -40,6 +40,12 @@ export class UserRegisterComponent {
         }
         console.log(data)
 
-        this.dataService.sendDataUser(data).subscribe(resp => console.log('resp',resp));
+        this.dataService.sendDataUser(data).subscribe(resp => {
+            resp = JSON.parse(resp)
+
+            if (resp.message === 'Usuario registrado con exito.') {
+                alert(resp.message)
+            }
+        });
     };
 }
