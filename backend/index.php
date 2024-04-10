@@ -28,11 +28,17 @@ class Api
         $request = $_SERVER['REQUEST_URI'];
         // Analizamos la ruta para determinar la acción a realizar
 
-        switch ($request) {
+        $requestPath = strtok($request, '?'); // Obtiene la ruta sin los parámetros
+        $queryString = strtok(''); // Obtiene la cadena de consulta sin la ruta
+
+        // Ahora, analizamos los parámetros de la cadena de consulta
+        parse_str($queryString, $queryParams);
+
+        switch ($requestPath) {
             case '/api/users':
                 if ($requestMethod === 'GET') {
                     // Obtener todos los usuarios
-                    $this->getUsers();
+                    $this->getUsers($queryParams);
                 } elseif ($requestMethod === 'POST') {
                     // Registrar un nuevo usuario
                     $this->registerUser();
@@ -71,10 +77,19 @@ class Api
         echo json_encode($state);
     }
 
-    private function getUsers()
+    private function getUsers($queryParams)
     {
+       
+        $recordsPerPage = 5;
+
+        $page = isset($queryParams['page']) ? (int)$queryParams['page'] : 1;
+
+        $offset = ($page - 1) * $recordsPerPage;
+       
+
+
         // Consultamos la base de datos para obtener los usuarios
-        $result = $this->db->conn->query("SELECT * FROM users");
+        $result = $this->db->conn->query("SELECT * FROM users ORDER BY id LIMIT $recordsPerPage OFFSET $offset");
 
         // Convertimos los resultados a un array
         $users = array();
