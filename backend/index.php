@@ -36,15 +36,39 @@ class Api
                 } elseif ($requestMethod === 'POST') {
                     // Registrar un nuevo usuario
                     $this->registerUser();
-                } elseif($requestMethod === 'OPTIONS') {
+                } elseif ($requestMethod === 'OPTIONS') {
                     exit(0);
-                }else{
+                } else {
                     // Método no permitido
                     $this->methodNotAllowedResponse();
                 }
+                break;
+            case preg_match('/\/api\/zipcode\/(\d+)/', $request, $matches) ? $request : null:
+                if ($requestMethod === 'GET') {
+                    // Validar el código postal
+                    $zipCode = $matches[1];
+                    $this->validateZipCode($zipCode);
+                } elseif ($requestMethod === 'OPTIONS') {
+                    exit(0);
+                } else {
+                    // Método no permitido
+                    $this->methodNotAllowedResponse();
+                }
+                break;
+
             default:
                 break;
         }
+    }
+
+    private function validateZipCode($zipCode)
+    {
+
+        $state = $this->isValidZipCode($zipCode);
+
+
+        header('Content-Type: application/json');
+        echo json_encode($state);
     }
 
     private function getUsers()
@@ -158,7 +182,11 @@ class Api
             $data = json_decode($response, true);
 
             // Verificar si la respuesta contiene información (el código postal es válido)
-            return true;
+            if ($data[0]['response']['estado']) {
+                return $data[0]['response']['estado'];
+            } else {
+                return false;
+            }
         } catch (\Throwable $e) {
             $this->errorResponse("Error al registrar el usuario: " . $e->getMessage());
         }
