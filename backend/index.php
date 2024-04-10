@@ -97,7 +97,15 @@ class Api
 
             // Devolvemos la respuesta en formato JSON
             header('Content-Type: application/json');
-            echo json_encode($users);
+
+
+            $totals = $this->db->conn->query("SELECT COUNT(*) as totals FROM users WHERE names LIKE '%$searchTerm%' OR firstSurname LIKE '%$searchTerm%' OR secondSurname LIKE '%$searchTerm%' OR email LIKE '%$searchTerm%' OR zipCode LIKE '%$searchTerm%' OR state LIKE '%$searchTerm%'");
+            
+            $data = array();
+            $data['users'] = $users;
+            $data['totals'][] = $totals->fetch_assoc();
+            
+            echo json_encode($data);
         } else {
 
             // Consultamos la base de datos para obtener los usuarios
@@ -111,7 +119,16 @@ class Api
 
             // Devolvemos la respuesta en formato JSON
             header('Content-Type: application/json');
-            echo json_encode($users);
+             
+
+
+            $totals = $this->db->conn->query("SELECT COUNT(*) as totals FROM users");
+            
+            $data = array();
+            $data['users'] = $users;
+            $data['totals'][] = $totals->fetch_assoc();
+            
+            echo json_encode($data);
         }
     }
 

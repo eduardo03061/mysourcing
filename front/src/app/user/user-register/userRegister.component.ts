@@ -49,21 +49,23 @@ export class UserRegisterComponent {
 
         }
 
-        this.dataService.sendDataUser(data).subscribe(resp => {
-            resp = JSON.parse(resp)
+        this.dataService.sendDataUser(data).subscribe(
+            { 
+                error: err =>{
+                    alert('Error al crear usuario, revisa que los campos esten correctos.') 
+                },
+                complete: () => {
+                    alert('Creado con exito!');
 
-            if (resp.message === 'Usuario registrado con exito.') {
-                alert(resp.message);
 
-
-                this.names = '';
-                this.firstSurname = '';
-                this.secondSurname = '';
-                this.email = '';
-                this.phone = '';
-                this.zipCode = '';
-                this.state = '';
-            }
-        });
+                    this.names = '';
+                    this.firstSurname = '';
+                    this.secondSurname = '';
+                    this.email = '';
+                    this.phone = '';
+                    this.zipCode = '';
+                    this.state = '';
+                }
+              });
     };
 }
